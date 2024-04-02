@@ -8,7 +8,7 @@
   <div v-if="doesProblemExist">
     <label for="question">Question</label>
     <br />
-    <input id="question" type="text" v-model="question" />
+    <textarea id="question" v-model="question" />
     <br />
     <label for="passage">Passage</label>
     <br />
@@ -18,7 +18,7 @@
     <br />
     <ul>
       <li v-for="(_, index) in criteria" :key="index">
-        <input type="text" v-model="criteria[index]" />
+        <textarea v-model="criteria[index]" />
       </li>
     </ul>
     <button @click="criteria.push('')">+ Add Criterion</button>

@@ -16,7 +16,11 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/problems/:id/submit",
-    component: () => import("../pages/ProblemSubmission.vue"),
+    component: () => import("../pages/ProblemSubmit.vue"),
+  },
+  {
+    path: "/problems/:problemId/submissions/:submissionId",
+    component: () => import("../pages/SubmissionView.vue"),
   },
   {
     path: "/:pathMatch(.*)*",

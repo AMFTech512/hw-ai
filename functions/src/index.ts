@@ -18,7 +18,7 @@ import { submissionCreatedHandler } from "./lib/handlers";
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
-export const api = onDocumentCreated(
+export const processSubmission = onDocumentCreated(
   {
     document: "problems/{problemId}/submissions/{submissionId}",
     secrets: [OPENAI_API_KEY_SECRET],
