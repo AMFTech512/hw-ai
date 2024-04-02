@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <h1>Auth</h1>
-    <p>User: {{ user.uid }}</p>
-  </div>
+  <slot />
 </template>
 
 <script setup lang="ts">
@@ -14,17 +11,17 @@ import {
   signInAnonymously,
 } from "firebase/auth";
 import { withMinimumDelay } from "../lib/util";
-import { inject } from "vue";
+import { provide } from "vue";
 import { FIREBASE_USER } from "../lib/di";
 
 const firebaseApp = useFirebase();
-const MINIMUM_DELAY = 1000;
+const MINIMUM_DELAY = 500;
 
 // get the current auth state
 const firebaseAuth = getAuth(firebaseApp);
 const user: User = await withMinimumDelay(
   new Promise((resolve) => {
-    onAuthStateChanged(firebaseAuth, async (user) => {
+    const unsub = onAuthStateChanged(firebaseAuth, async (user) => {
       // if the user is not logged in, log them in anonymously
       if (!user) {
         await signInAnonymously(firebaseAuth).then((userCred) =>
@@ -35,11 +32,13 @@ const user: User = await withMinimumDelay(
       else {
         resolve(user);
       }
+
+      unsub();
     });
   }),
   MINIMUM_DELAY
 );
 
-// inject the user into the app
-inject(FIREBASE_USER, user);
+// provide the user for the app
+provide(FIREBASE_USER, user);
 </script>

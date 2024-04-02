@@ -1,6 +1,8 @@
 <template>
   <Suspense>
-    <Auth />
+    <Auth>
+      <RouterView />
+    </Auth>
 
     <template #fallback>
       <img src="./assets/loading-spinner.svg" width="50" />
